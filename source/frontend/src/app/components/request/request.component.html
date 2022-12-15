@@ -1,0 +1,39 @@
+<div class="card">
+  <div class="card-header bg-light">
+    {{title}}
+  </div>
+  <div class="card-body">
+    <div class="row g-2">
+      <div class="title col-4 col-sm-3 col-md-2 col-lg-3">Protection:</div>
+
+      <ng-container [ngSwitch]="protection">
+        <div *ngSwitchCase="'anonymous'" class="data col-8 col-sm-9 col-md-10 col-lg-9"><i i-bs name="shield"></i>Anonymous</div>
+        <div *ngSwitchCase="'authenticated'" class="data col-8 col-sm-9 col-md-10 col-lg-9"><i i-bs name="shield-shaded"></i>Authenticated</div>
+        <div *ngSwitchCase="'authorized'" class="data col-8 col-sm-9 col-md-10 col-lg-9"><i i-bs name="shield-fill"></i>Authorized</div>
+      </ng-container>
+
+      <div class="title col-4 col-sm-3 col-md-2 col-lg-3 align-self-center">Query:</div>
+      <div class="data  col-8 col-sm-9 col-md-10 col-lg-9">
+        <button type="button" class="btn btn-secondary btn-sm" (click)="senRequest()">Execute</button>
+      </div>
+    </div>
+
+    <form *ngIf="requestDataForm" [formGroup]="requestDataForm">
+      <ng-container *ngFor="let formControlName of getFormControlNames()">
+        <div class="row pt-2">
+          <label class="col-form-label col-4 col-sm-3 col-md-2 col-lg-3" [for]="formControlName">{{formControlName}}: </label>
+          <div class="px-2 col-8 col-sm-9 col-md-10 col-lg-9">
+            <input [id]="formControlName" type="text" class="form-control" [formControlName]="formControlName">
+          </div>
+        </div>
+      </ng-container>
+    </form>
+
+    <div class="row pt-2">
+      <div class="title col-4 col-sm-3 col-md-2 col-lg-3">Result:</div>
+      <div class="data  col-8 col-sm-9 col-md-10 col-lg-9">
+        <pre class="mb-0">{{response | json}}</pre>
+      </div>
+    </div>
+  </div>
+</div>
