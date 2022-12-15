@@ -1,0 +1,50 @@
+<nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Keycloak Demo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav flex-fill">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{environment.apiBasePath}}" target="_blank">API</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row row-cols-1 row-cols-lg-2 g-4 pt-5">
+    <!-- Get application name -->
+    <div class="col">
+      <app-request title="Get application name" protection="anonymous" [request]="getApplicationName"></app-request>
+    </div>
+    <!-- Get current user -->
+    <div class="col">
+      <app-request title="Get current user" protection="anonymous" [request]="getCurrentUser" [resultDepth]="0"></app-request>
+    </div>
+  </div>
+
+  <div class="row row-cols-1 row-cols-lg-2 g-4 pt-4">
+    <!-- Read articles -->
+    <div class="col">
+      <app-request title="Read articles" protection="anonymous" [request]="readArticles"></app-request>
+    </div>
+    <!-- Read article -->
+    <div class="col">
+      <app-request title="Read article" protection="anonymous" [request]="readArticle" [requestData]="readArticleData"></app-request>
+    </div>
+    <!-- Create article -->
+    <div class="col">
+      <app-request title="Create article" protection="anonymous" [request]="createArticle" [requestData]="createArticleData"></app-request>
+    </div>
+    <!-- Delete article -->
+    <div class="col">
+      <app-request title="Delete article" protection="anonymous" [request]="deleteArticle" [requestData]="deleteArticleData"></app-request>
+    </div>
+  </div>
+</div>
