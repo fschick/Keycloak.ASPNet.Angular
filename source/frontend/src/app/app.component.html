@@ -1,0 +1,50 @@
+<nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Keycloak Demo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{environment.apiBasePath}}" target="_blank">API</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row row-cols-1 row-cols-lg-2 g-4 pt-5">
+    <!-- Get application name -->
+    <div class="col">
+      <app-request title="Get application name" protection="anonymous" [request]="getApplicationName"></app-request>
+    </div>
+    <!-- Get current user -->
+    <div class="col">
+      <app-request title="Get current user" protection="anonymous" [request]="getCurrentUser"></app-request>
+    </div>
+  </div>
+
+  <div class="row row-cols-1 row-cols-lg-2 g-4 pt-4">
+    <!-- Get articles -->
+    <div class="col">
+      <app-request title="Get articles" protection="anonymous" [request]="getArticles"></app-request>
+    </div>
+    <!-- Get article -->
+    <div class="col">
+      <app-request title="Get article" protection="anonymous" [request]="getArticle" [requestData]="getArticleData"></app-request>
+    </div>
+    <!-- Add article -->
+    <div class="col">
+      <app-request title="Add article" protection="anonymous" [request]="addArticle" [requestData]="addArticleData"></app-request>
+    </div>
+    <!-- Remove article -->
+    <div class="col">
+      <app-request title="Remove article" protection="anonymous" [request]="removeArticle" [requestData]="removeArticleData"></app-request>
+    </div>
+  </div>
+</div>
