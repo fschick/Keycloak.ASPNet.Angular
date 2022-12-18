@@ -21,7 +21,7 @@
     "@ng-bootstrap/ng-bootstrap": "^17.0.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
-    "keycloak-js": "^24.0.5",
+    "keycloak-js": "^25.0.1",
     "ngx-clipboard": "^16.0.0",
     "ngx-json-viewer": "^3.2.1",
     "rxjs": "~7.8.0",
