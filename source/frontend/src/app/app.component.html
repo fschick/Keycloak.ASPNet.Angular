@@ -12,6 +12,21 @@
         <li class="nav-item">
           <a class="nav-link" href="{{environment.apiBasePath}}" target="_blank">API</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ssoUrl}}" target="_blank">SSO</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <span *ngIf="username" class="nav-link">Logged in: {{username}}</span>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="login()">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">Logout</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -30,35 +45,35 @@
     <li [ngbNavItem]="2">
       <button ngbNavLink>Get current user</button>
       <ng-template ngbNavContent>
-        <app-request title="Get current user" protection="anonymous" [request]="getCurrentUser" [resultDepth]="0"></app-request>
+        <app-request title="Get current user" protection="authenticated" [request]="getCurrentUser" [resultDepth]="0"></app-request>
       </ng-template>
     </li>
     <!-- Get articles -->
     <li [ngbNavItem]="3">
-      <button ngbNavLink>Get articles</button>
+      <button ngbNavLink>Read articles</button>
       <ng-template ngbNavContent>
-        <app-request title="Get articles" protection="anonymous" [request]="readArticles"></app-request>
+        <app-request title="Read articles" protection="authenticated" [request]="readArticles"></app-request>
       </ng-template>
     </li>
     <!-- Get article -->
     <li [ngbNavItem]="4">
-      <button ngbNavLink>Get article</button>
+      <button ngbNavLink>Read article</button>
       <ng-template ngbNavContent>
-        <app-request title="Get article" protection="anonymous" [request]="readArticle" [requestData]="readArticleData"></app-request>
+        <app-request title="Read article" protection="authenticated" [request]="readArticle" [requestData]="readArticleData"></app-request>
       </ng-template>
     </li>
     <!-- Add article -->
     <li [ngbNavItem]="5">
-      <button ngbNavLink>Add article</button>
+      <button ngbNavLink>Create article</button>
       <ng-template ngbNavContent>
-        <app-request title="Add article" protection="anonymous" [request]="createArticle" [requestData]="createArticleData"></app-request>
+        <app-request title="Create article" protection="authenticated" [request]="createArticle" [requestData]="createArticleData"></app-request>
       </ng-template>
     </li>
     <!-- Remove article -->
     <li [ngbNavItem]="6">
-      <button ngbNavLink>Remove article</button>
+      <button ngbNavLink>Delete article</button>
       <ng-template ngbNavContent>
-        <app-request title="Remove article" protection="anonymous" [request]="deleteArticle" [requestData]="deleteArticleData"></app-request>
+        <app-request title="Delete article" protection="authenticated" [request]="deleteArticle" [requestData]="deleteArticleData"></app-request>
       </ng-template>
     </li>
   </ul>

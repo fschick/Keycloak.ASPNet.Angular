@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve  --host 0.0.0.0 --port 4200 --ssl --ssl-key ../certs/development.key --ssl-cert ../certs/development.pem",
+    "start": "ng serve  --host 0.0.0.0 --port 4200 --ssl --ssl-cert ../certs/development.pem --ssl-key ../certs/development.key",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -20,8 +20,8 @@
     "@angular/router": "^19.0.6",
     "@ng-bootstrap/ng-bootstrap": "^18.0.0",
     "@popperjs/core": "^2.11.8",
+    "angular-oauth2-oidc": "^19.0.0",
     "bootstrap": "^5.3.3",
-    "keycloak-js": "^26.0.5",
     "ngx-clipboard": "^16.0.0",
     "ngx-json-viewer": "^3.2.1",
     "rxjs": "~7.8.0",

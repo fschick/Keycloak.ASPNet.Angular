@@ -6,7 +6,7 @@ namespace Keycloak.ASPNet.Angular.Api;
 /// <summary>
 /// Main entry-class for this application.
 /// </summary>
-public class Program
+public static class Program
 {
     /// <summary>
     /// Main entry-point for this application.
@@ -16,12 +16,14 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddRestApi();
-        builder.Services.AddOpenApi();
+        builder.Services.AddOpenApi(builder.Configuration);
+        builder.Services.AddAuthentication(builder.Configuration);
 
         var app = builder.Build();
 
         app.AddRestApi();
-        app.AddOpenApi();
+        app.AddOpenApi(builder.Configuration);
+        app.AddAuthentication();
 
         app.Run();
     }

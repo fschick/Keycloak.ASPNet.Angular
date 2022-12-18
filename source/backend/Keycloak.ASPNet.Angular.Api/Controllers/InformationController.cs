@@ -1,5 +1,6 @@
 ﻿using Keycloak.ASPNet.Angular.Api.Extensions;
 using Keycloak.ASPNet.Angular.Api.Routing;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ public class InformationController : ControllerBase
     /// The product name
     /// </returns>
     [HttpGet(nameof(GetProductName))]
+    [AllowAnonymous]
     public Task<string> GetProductName(CancellationToken cancellationToken = default)
         => Task.FromResult(AssemblyExtensions.GetProgramProduct());
 
@@ -31,6 +33,7 @@ public class InformationController : ControllerBase
     /// The product version
     /// </returns>
     [HttpGet(nameof(GetProductVersion))]
+    [AllowAnonymous]
     public Task<string> GetProductVersion(CancellationToken cancellationToken = default)
         => Task.FromResult(AssemblyExtensions.GetProgramProductVersion());
 }
