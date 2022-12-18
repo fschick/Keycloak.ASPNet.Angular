@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +9,8 @@ namespace Keycloak.ASPNet.Angular.Api.Extensions;
 /// <summary>
 /// Extensions methods for type <see cref="Assembly"></see>
 /// </summary>
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public library.")]
+[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public library.")]
 internal static class AssemblyExtensions
 {
     #region Path
@@ -265,7 +268,7 @@ internal static class AssemblyExtensions
     /// <param name="assembly">The assembly to get the assembly version for</param>
     /// <returns>The assembly version of the assembly</returns>
     public static string GetAssemblyAssemblyVersion(this Assembly assembly)
-        => assembly?.GetName().Version.ToString();
+        => assembly?.GetName().Version?.ToString();
     #endregion
 
     #region FileVersion
