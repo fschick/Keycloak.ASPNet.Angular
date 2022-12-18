@@ -3,6 +3,7 @@ using Keycloak.ASPNet.Angular.Api.Routing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
@@ -19,7 +20,8 @@ internal static class OpenApiStartup
     /// Register OpenAPI related services.
     /// </summary>
     /// <param name="services">The services to act on.</param>
-    public static void AddOpenApi(this IServiceCollection services)
+    /// <param name="configuration">The application configuration.</param>
+    public static void AddOpenApi(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSwaggerGen(config =>
         {
@@ -31,6 +33,9 @@ internal static class OpenApiStartup
 
             var restXmlDoc = Path.Combine(AppContext.BaseDirectory, "Keycloak.ASPNet.Angular.Api.xml");
             config.IncludeXmlComments(restXmlDoc);
+
+            //config.AddGenericAuthorization(configuration);
+            config.AddAuthorizationCodeFlow(configuration);
         });
     }
 
@@ -58,6 +63,8 @@ internal static class OpenApiStartup
             config.EnableDeepLinking();
             config.EnableTryItOutByDefault();
             config.ConfigObject.AdditionalItems.Add("requestSnippetsEnabled", true);
+
+            config.AddAuthentication();
         });
     }
 

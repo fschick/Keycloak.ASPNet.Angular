@@ -1,5 +1,6 @@
 using Keycloak.ASPNet.Angular.Api.Startup;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Keycloak.ASPNet.Angular.Api;
 
@@ -16,12 +17,14 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddRestApi();
-        builder.Services.AddOpenApi();
+        builder.Services.AddOpenApi(builder.Configuration);
+        builder.Services.AddAuthentication(builder.Configuration);
 
         var app = builder.Build();
 
         app.AddRestApi();
         app.AddOpenApi();
+        app.AddAuthentication();
 
         app.Run();
     }

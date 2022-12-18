@@ -1,5 +1,6 @@
 ﻿using Keycloak.ASPNet.Angular.Api.DTOs;
 using Keycloak.ASPNet.Angular.Api.Routing;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Concurrent;
@@ -31,6 +32,7 @@ public class ArticleController : ControllerBase
     /// The articles found
     /// </returns>
     [HttpGet]
+    [Authorize]
     public ActionResult<ICollection<ArticleDto>> GetArticles(CancellationToken cancellationToken = default)
         => Ok(_articles.Values);
 
@@ -43,6 +45,7 @@ public class ArticleController : ControllerBase
     /// The articles found
     /// </returns>
     [HttpGet]
+    [Authorize]
     public ActionResult<ArticleDto> GetArticle([Required] string id, CancellationToken cancellationToken = default)
     {
         if (id == null)
@@ -62,6 +65,7 @@ public class ArticleController : ControllerBase
     /// <param name="article">The article</param>
     /// <param name="cancellationToken">A token that allows processing to be cancelled</param>
     [HttpPost]
+    [Authorize]
     public ActionResult AddArticle([Required] ArticleDto article, CancellationToken cancellationToken = default)
     {
         if (article == null)
@@ -81,6 +85,7 @@ public class ArticleController : ControllerBase
     /// <param name="id">The identifier of the article to remove</param>
     /// <param name="cancellationToken">A token that allows processing to be cancelled</param>
     [HttpDelete]
+    [Authorize]
     public ActionResult RemoveArticle([Required] string id, CancellationToken cancellationToken = default)
     {
         if (id == null)
