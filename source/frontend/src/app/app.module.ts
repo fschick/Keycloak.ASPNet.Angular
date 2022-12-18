@@ -1,11 +1,14 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {AppRoutingModule} from './app-routing.module';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxBootstrapIconsModule, shield, shieldShaded, shieldFill, clipboardCheck} from 'ngx-bootstrap-icons';
 
-import {AppRoutingModule} from './app-routing.module';
+import {AuthenticationInterceptor} from './services/authentication.interceptor';
+import {AuthenticationService} from './services/authentication.service';
 import {AppComponent} from './app.component';
 import {RequestComponent} from './components/request/request.component';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -34,8 +37,24 @@ const bootstrapIcons = {
     NgxJsonViewerModule,
     ClipboardModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: keycloakLoaderFactory,
+      deps: [AuthenticationService],
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+}
+
+export function keycloakLoaderFactory(authenticationService: AuthenticationService): () => Promise<any> | Observable<any> {
+  return () => authenticationService.init();
 }
