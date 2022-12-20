@@ -56,11 +56,11 @@
     </div>
     <!-- Add article -->
     <div class="col">
-      <app-request title="Add article" protection="authenticated" [request]="addArticle" [requestData]="addArticleData"></app-request>
+      <app-request title="Add article" protection="authorized" [request]="addArticle" [requestData]="addArticleData"></app-request>
     </div>
     <!-- Remove article -->
     <div class="col">
-      <app-request title="Remove article" protection="authenticated" [request]="removeArticle" [requestData]="removeArticleData"></app-request>
+      <app-request title="Remove article" protection="authorized" [request]="removeArticle" [requestData]="removeArticleData"></app-request>
     </div>
   </div>
 </div>
