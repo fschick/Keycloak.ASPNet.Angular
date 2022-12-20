@@ -1,4 +1,5 @@
 ﻿using Keycloak.ASPNet.Angular.Api.DTOs;
+using Keycloak.ASPNet.Angular.Api.Models;
 using Keycloak.ASPNet.Angular.Api.Routing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -65,7 +66,7 @@ public class ArticleController : ControllerBase
     /// <param name="article">The article</param>
     /// <param name="cancellationToken">A token that allows processing to be cancelled</param>
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = AuthorizationRoles.Manager)]
     public ActionResult AddArticle([Required] ArticleDto article, CancellationToken cancellationToken = default)
     {
         if (article == null)
@@ -85,7 +86,7 @@ public class ArticleController : ControllerBase
     /// <param name="id">The identifier of the article to remove</param>
     /// <param name="cancellationToken">A token that allows processing to be cancelled</param>
     [HttpDelete]
-    [Authorize]
+    [Authorize(Roles = AuthorizationRoles.Manager)]
     public ActionResult RemoveArticle([Required] string id, CancellationToken cancellationToken = default)
     {
         if (id == null)

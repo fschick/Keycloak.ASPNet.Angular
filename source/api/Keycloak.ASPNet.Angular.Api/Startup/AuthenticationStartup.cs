@@ -109,17 +109,6 @@ internal static class AuthenticationStartup
         options.AddSecurityRequirement();
     }
 
-    /// <summary>
-    /// Adds authentication to OpenAPI UI.
-    /// </summary>
-    /// <param name="options">The options to act on.</param>
-    public static void AddAuthentication(this SwaggerUIOptions options)
-    {
-        options.OAuthClientId("api");
-        options.OAuthUsePkce();
-        options.EnablePersistAuthorization();
-    }
-
     private static void AddSecurityRequirement(this SwaggerGenOptions options)
     {
         var securityRequirement = new OpenApiSecurityRequirement
