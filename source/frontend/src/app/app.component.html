@@ -52,28 +52,28 @@
     <li [ngbNavItem]="3">
       <button ngbNavLink>Read articles</button>
       <ng-template ngbNavContent>
-        <app-request title="Read articles" protection="authenticated" [request]="readArticles"></app-request>
+        <app-request title="Read articles" protection="authorized" [request]="readArticles"></app-request>
       </ng-template>
     </li>
     <!-- Get article -->
     <li [ngbNavItem]="4">
       <button ngbNavLink>Read article</button>
       <ng-template ngbNavContent>
-        <app-request title="Read article" protection="authenticated" [request]="readArticle" [requestData]="readArticleData"></app-request>
+        <app-request title="Read article" protection="authorized" [request]="readArticle" [requestData]="readArticleData"></app-request>
       </ng-template>
     </li>
     <!-- Add article -->
     <li [ngbNavItem]="5">
       <button ngbNavLink>Create article</button>
       <ng-template ngbNavContent>
-        <app-request title="Create article" protection="authenticated" [request]="createArticle" [requestData]="createArticleData"></app-request>
+        <app-request title="Create article" protection="authorized" [request]="createArticle" [requestData]="createArticleData"></app-request>
       </ng-template>
     </li>
     <!-- Remove article -->
     <li [ngbNavItem]="6">
       <button ngbNavLink>Delete article</button>
       <ng-template ngbNavContent>
-        <app-request title="Delete article" protection="authenticated" [request]="deleteArticle" [requestData]="deleteArticleData"></app-request>
+        <app-request title="Delete article" protection="authorized" [request]="deleteArticle" [requestData]="deleteArticleData"></app-request>
       </ng-template>
     </li>
   </ul>
