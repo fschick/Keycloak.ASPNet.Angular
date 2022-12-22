@@ -8,19 +8,20 @@ using System.Threading.Tasks;
 namespace Keycloak.ASPNet.Angular.Api.Filters;
 
 /// <summary>
-/// Transforms Keycloak realm roles to JWT role claims.
+/// Transforms Keycloak roles in the resource_access claim to JWT role claims.
 /// </summary>
 /// <example>
-/// "realm_access": {
-///   "roles": [
-///   "manager",
-///   "offline_access",
-///   "uma_authorization"
+/// "authorization": {
+///   "permissions": [{
+///       "scopes": [ "Read", "Manage" ],
+///       "rsid": "a7ff18e5-fc31-4a3f-8c0e-4e2ea2943f41",
+///       "rsname": "Articles"
+///     }
 ///   ]
-/// },
+/// }
 /// </example>
 /// <seealso cref="IClaimsTransformation" />
-public class RealmRoleTransformation : IClaimsTransformation
+public class RptRoleTransformation : IClaimsTransformation
 {
     /// <summary>
     /// Provides a central transformation point to change the specified principal.
@@ -37,21 +38,28 @@ public class RealmRoleTransformation : IClaimsTransformation
         if (result.Identity is not ClaimsIdentity identity)
             return Task.FromResult(result);
 
-        var realmAccess = principal.FindFirst("realm_access")?.Value;
-        if (string.IsNullOrWhiteSpace(realmAccess))
+        var authorization = principal.FindFirst("authorization")?.Value;
+        if (string.IsNullOrWhiteSpace(authorization))
             return Task.FromResult(result);
 
-        var roleContainer = JsonConvert.DeserializeObject<KeycloakJwtRoleContainer>(realmAccess);
-        if (roleContainer == null)
+        var permissionContainer = JsonConvert.DeserializeObject<KeycloakJwtPermissionContainer>(authorization);
+        if (permissionContainer == null)
             return Task.FromResult(result);
 
-        var realmRoles = roleContainer.Roles
-            .Where(role => !string.IsNullOrWhiteSpace(role))
+        var clientRoles = permissionContainer
+            .Permissions
+            .Where(HasResourceNameAndScopes)
+            .SelectMany(permission => permission.Scopes.Select(scope => $"{permission.ResourceName}#{scope}"))
             .ToList();
 
-        foreach (var role in realmRoles)
+        foreach (var role in clientRoles)
             identity.AddClaim(new Claim(ClaimsIdentity.DefaultRoleClaimType, role));
 
         return Task.FromResult(result);
     }
+
+    private static bool HasResourceNameAndScopes(KeycloakJwtPermission permission)
+        => !string.IsNullOrWhiteSpace(permission.ResourceName) &&
+           permission.Scopes != null &&
+           permission.Scopes.Any();
 }
