@@ -32,7 +32,7 @@ public class ArticleController : ControllerBase
     /// <param name="article">The article</param>
     /// <param name="cancellationToken">A token that allows processing to be cancelled</param>
     [HttpPost]
-    [Authorize(Roles = AuthorizationRoles.Manage)]
+    [Authorize(Roles = AuthorizationRoles.ArticlesCreate)]
     public ActionResult CreateArticle([Required] ArticleDto article, CancellationToken cancellationToken = default)
     {
         if (article == null)
@@ -53,7 +53,7 @@ public class ArticleController : ControllerBase
     /// All articles
     /// </returns>
     [HttpGet]
-    [Authorize(Roles = AuthorizationRoles.Read)]
+    [Authorize(Roles = AuthorizationRoles.ArticlesRead)]
     public ActionResult<ICollection<ArticleDto>> ReadArticles(CancellationToken cancellationToken = default)
         => Ok(_articles.Values);
 
@@ -66,7 +66,7 @@ public class ArticleController : ControllerBase
     /// The requested article
     /// </returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = AuthorizationRoles.Read)]
+    [Authorize(Roles = AuthorizationRoles.ArticlesRead)]
     public ActionResult<ArticleDto> ReadArticle([Required] string id, CancellationToken cancellationToken = default)
     {
         if (id == null)
@@ -86,7 +86,7 @@ public class ArticleController : ControllerBase
     /// <param name="id">The identifier of the article to remove</param>
     /// <param name="cancellationToken">A token that allows processing to be cancelled</param>
     [HttpDelete("{id}")]
-    [Authorize(Roles = AuthorizationRoles.Manage)]
+    [Authorize(Roles = AuthorizationRoles.ArticlesDelete)]
     public ActionResult DeleteArticle([Required] string id, CancellationToken cancellationToken = default)
     {
         if (id == null)

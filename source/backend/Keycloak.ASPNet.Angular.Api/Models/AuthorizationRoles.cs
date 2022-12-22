@@ -9,12 +9,17 @@ namespace Keycloak.ASPNet.Angular.Api.Models;
 public static class AuthorizationRoles
 {
     /// <summary>
-    /// Read resources.
+    /// Can read articles
     /// </summary>
-    public const string Read = nameof(Read);
+    public const string ArticlesRead = "Article#GET";
 
     /// <summary>
-    /// Manage resources.
+    /// Can manage articles
     /// </summary>
-    public const string Manage = nameof(Manage);
+    public const string ArticlesCreate = "Article#POST";
+
+    /// <summary>
+    /// Can manage articles
+    /// </summary>
+    public const string ArticlesDelete = "Article#DELETE";
 }
