@@ -48,11 +48,11 @@
   <div class="row row-cols-1 row-cols-lg-2 g-4 pt-4">
     <!-- Get articles -->
     <div class="col">
-      <app-request title="Get articles" protection="authenticated" [request]="getArticles"></app-request>
+      <app-request title="Get articles" protection="authorized" [request]="getArticles"></app-request>
     </div>
     <!-- Get article -->
     <div class="col">
-      <app-request title="Get article" protection="authenticated" [request]="getArticle" [requestData]="getArticleData"></app-request>
+      <app-request title="Get article" protection="authorized" [request]="getArticle" [requestData]="getArticleData"></app-request>
     </div>
     <!-- Add article -->
     <div class="col">
