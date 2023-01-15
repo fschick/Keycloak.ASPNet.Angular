@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JWT" Version="11.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.2.0" />
+    <PackageReference Include="SauceControl.InheritDoc" Version="2.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
+    <InheritDocEnabled>true</InheritDocEnabled>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Product>Keycloak with ASP.NET and Angular demo</Product>
+    <Title>$(Product)</Title>
+    <Description>$(Product)</Description>
+    <Authors>Florian Schick</Authors>
+    <Company>Schick Software Entwicklung</Company>
+    <Copyright>© Florian Schick, 2022-2023 all rights reserved</Copyright>
+    <Tags></Tags>
+    <PackageDescription>$(Description)</PackageDescription>
+    <Owners>$(Company)</Owners>
+    <Summary>$(Description)</Summary>
+
+    <Version>0.0.0.0</Version>
+    <FileVersion>0.0.0.0</FileVersion>
+    <AssemblyVersion>$(FileVersion)</AssemblyVersion>
+
+    <PackageProjectUrl>https://github.com/fschick/Keycloak.ASPNet.Angular</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/fschick/Keycloak.ASPNet.Angular.git</RepositoryUrl>
+    <PackageLicenseUrl>MIT</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>$(Tags)</PackageTags>
+  </PropertyGroup>
+
+</Project>
