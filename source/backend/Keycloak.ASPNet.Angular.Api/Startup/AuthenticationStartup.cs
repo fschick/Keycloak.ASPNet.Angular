@@ -1,5 +1,4 @@
 ﻿using Keycloak.ASPNet.Angular.Api.Filters;
-using Keycloak.ASPNet.Angular.Api.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -25,7 +24,6 @@ internal static class AuthenticationStartup
     public static void AddAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         var jwtOptions = configuration.GetSection("JwtBearer").Get<JwtBearerOptions>();
-        var keycloakOptions = configuration.GetSection(KeycloakConfiguration.CONFIGURATION_SECTION).Get<KeycloakConfiguration>();
 
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -39,7 +37,7 @@ internal static class AuthenticationStartup
                     // https://stackoverflow.com/a/53627747, 
                     // https://nikiforovall.github.io/aspnetcore/dotnet/2022/08/24/dotnet-keycloak-auth.html
                     ValidateAudience = true,
-                    ValidAudiences = new List<string> { jwtOptions.Audience, keycloakOptions.ResourceServer.ClientId },
+                    ValidAudiences = new List<string> { jwtOptions.Audience },
                     NameClaimType = "preferred_username",
                 };
             });
