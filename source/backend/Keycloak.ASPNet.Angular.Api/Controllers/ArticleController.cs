@@ -1,5 +1,5 @@
 ﻿using Keycloak.ASPNet.Angular.Api.DTOs;
-using Keycloak.ASPNet.Angular.Api.Models;
+using Keycloak.ASPNet.Angular.Api.Policies;
 using Keycloak.ASPNet.Angular.Api.Routing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +33,7 @@ public class ArticleController : ControllerBase
     /// The articles found
     /// </returns>
     [HttpGet]
-    [Authorize(Roles = AuthorizationRoles.ArticlesRead)]
+    [Authorize(Policy = UmaPolicy.SCOPE_READ)]
     public ActionResult<ICollection<ArticleDto>> GetArticles(CancellationToken cancellationToken = default)
         => Ok(_articles.Values);
 
@@ -46,7 +46,7 @@ public class ArticleController : ControllerBase
     /// The articles found
     /// </returns>
     [HttpGet]
-    [Authorize(Roles = AuthorizationRoles.ArticlesRead)]
+    [Authorize(Policy = UmaPolicy.SCOPE_READ)]
     public ActionResult<ArticleDto> GetArticle([Required] string id, CancellationToken cancellationToken = default)
     {
         if (id == null)
@@ -66,7 +66,7 @@ public class ArticleController : ControllerBase
     /// <param name="article">The article</param>
     /// <param name="cancellationToken">A token that allows processing to be cancelled</param>
     [HttpPost]
-    [Authorize(Roles = AuthorizationRoles.ArticlesManage)]
+    [Authorize(Policy = UmaPolicy.SCOPE_MANAGE)]
     public ActionResult AddArticle([Required] ArticleDto article, CancellationToken cancellationToken = default)
     {
         if (article == null)
@@ -86,7 +86,7 @@ public class ArticleController : ControllerBase
     /// <param name="id">The identifier of the article to remove</param>
     /// <param name="cancellationToken">A token that allows processing to be cancelled</param>
     [HttpDelete]
-    [Authorize(Roles = AuthorizationRoles.ArticlesManage)]
+    [Authorize(Policy = UmaPolicy.SCOPE_MANAGE)]
     public ActionResult RemoveArticle([Required] string id, CancellationToken cancellationToken = default)
     {
         if (id == null)
