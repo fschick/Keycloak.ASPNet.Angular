@@ -1,6 +1,9 @@
 ﻿using Keycloak.ASPNet.Angular.Api.Filters;
+using Keycloak.ASPNet.Angular.Api.Models;
+using Keycloak.ASPNet.Angular.Api.Policies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,12 +24,18 @@ internal static class AuthorizationStartup
     /// Register authorization related services.
     /// </summary>
     /// <param name="services">The services to act on.</param>
-    public static void AddAuthorization(this IServiceCollection services)
+    /// <param name="configuration">The configuration.</param>
+    public static void AddAuthorization(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddHttpClient();
+        services.AddAuthorization(options => options.AddPolicy(UmaPolicy.NAME, policy => policy.RequireAuthenticatedUser().Requirements.Add(new UmaPolicy())));
+        services.Configure<KeycloakConfiguration>(configuration.GetSection(KeycloakConfiguration.CONFIGURATION_SECTION));
+
         services.AddSingleton<RealmRoleTransformation, RealmRoleTransformation>();
         services.AddSingleton<ClientRoleTransformation, ClientRoleTransformation>();
         services.AddSingleton<RptRoleTransformation, RptRoleTransformation>();
         services.AddSingleton<IClaimsTransformation, KeycloakJwtTransformation>();
+        services.AddSingleton<IAuthorizationHandler, UmaPolicyHandler>();
     }
 
     /// <summary>
