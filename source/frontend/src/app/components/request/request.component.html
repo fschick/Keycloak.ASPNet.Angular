@@ -1,7 +1,4 @@
-<div class="card">
-  <div class="card-header bg-light">
-    {{ title }}
-  </div>
+<div class="card  border-0">
   <div class="card-body">
     <div class="row g-2">
       <div class="title col-4 col-sm-3 col-md-2 col-lg-3">Protection:</div>
@@ -52,7 +49,7 @@
               <li ngbNavItem ngbNavItem="parsed" title="View parsed result" class="nav-item">
                 <button ngbNavLink class="pb-0 mb-2">Parsed</button>
                 <ng-template ngbNavContent>
-                  <ngx-json-viewer class="response parsed d-block" [json]="response" [depth]="1"></ngx-json-viewer>
+                  <ngx-json-viewer class="response parsed d-block" [json]="response" [depth]="resultDepth ?? 1"></ngx-json-viewer>
                 </ng-template>
               </li>
               <li ngbNavItem ngbNavItem="raw" title="View raw result" class="nav-item">

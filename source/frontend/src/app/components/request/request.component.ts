@@ -20,6 +20,7 @@ export class RequestComponent implements OnInit {
   @Input() public protection?: 'anonymous' | 'authenticated' | 'authorized';
   @Input() public request?: (requestData: RequestData) => Observable<any>;
   @Input() public requestData?: RequestData;
+  @Input() public resultDepth?: number;
 
   public requestDataForm?: FormGroup;
   public response: any;
