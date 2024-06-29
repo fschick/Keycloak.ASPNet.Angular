@@ -18,33 +18,50 @@
 </nav>
 
 <div class="container">
-  <div class="row row-cols-1 row-cols-lg-2 g-4 pt-5">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" [destroyOnHide]="false" class="nav-tabs pt-5">
     <!-- Get application name -->
-    <div class="col">
-      <app-request title="Get application name" protection="anonymous" [request]="getApplicationName"></app-request>
-    </div>
+    <li [ngbNavItem]="1">
+      <button ngbNavLink>Get application name</button>
+      <ng-template ngbNavContent>
+        <app-request title="Get application name" protection="anonymous" [request]="getApplicationName"></app-request>
+      </ng-template>
+    </li>
     <!-- Get current user -->
-    <div class="col">
-      <app-request title="Get current user" protection="anonymous" [request]="getCurrentUser" [resultDepth]="0"></app-request>
-    </div>
-  </div>
+    <li [ngbNavItem]="2">
+      <button ngbNavLink>Get current user</button>
+      <ng-template ngbNavContent>
+        <app-request title="Get current user" protection="anonymous" [request]="getCurrentUser" [resultDepth]="0"></app-request>
+      </ng-template>
+    </li>
+    <!-- Get articles -->
+    <li [ngbNavItem]="3">
+      <button ngbNavLink>Get articles</button>
+      <ng-template ngbNavContent>
+        <app-request title="Get articles" protection="anonymous" [request]="readArticles"></app-request>
+      </ng-template>
+    </li>
+    <!-- Get article -->
+    <li [ngbNavItem]="4">
+      <button ngbNavLink>Get article</button>
+      <ng-template ngbNavContent>
+        <app-request title="Get article" protection="anonymous" [request]="readArticle" [requestData]="readArticleData"></app-request>
+      </ng-template>
+    </li>
+    <!-- Add article -->
+    <li [ngbNavItem]="5">
+      <button ngbNavLink>Add article</button>
+      <ng-template ngbNavContent>
+        <app-request title="Add article" protection="anonymous" [request]="createArticle" [requestData]="createArticleData"></app-request>
+      </ng-template>
+    </li>
+    <!-- Remove article -->
+    <li [ngbNavItem]="6">
+      <button ngbNavLink>Remove article</button>
+      <ng-template ngbNavContent>
+        <app-request title="Remove article" protection="anonymous" [request]="deleteArticle" [requestData]="deleteArticleData"></app-request>
+      </ng-template>
+    </li>
+  </ul>
 
-  <div class="row row-cols-1 row-cols-lg-2 g-4 pt-4">
-    <!-- Read articles -->
-    <div class="col">
-      <app-request title="Read articles" protection="anonymous" [request]="readArticles"></app-request>
-    </div>
-    <!-- Read article -->
-    <div class="col">
-      <app-request title="Read article" protection="anonymous" [request]="readArticle" [requestData]="readArticleData"></app-request>
-    </div>
-    <!-- Create article -->
-    <div class="col">
-      <app-request title="Create article" protection="anonymous" [request]="createArticle" [requestData]="createArticleData"></app-request>
-    </div>
-    <!-- Delete article -->
-    <div class="col">
-      <app-request title="Delete article" protection="anonymous" [request]="deleteArticle" [requestData]="deleteArticleData"></app-request>
-    </div>
-  </div>
+  <div [ngbNavOutlet]="nav"></div>
 </div>
