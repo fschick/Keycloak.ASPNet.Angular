@@ -4,10 +4,11 @@ import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {routes} from "./services/routes";
 import {environment} from '../environments/environment';
+import {NgbNavModule} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-root',
-    imports: [RequestComponent],
+    imports: [RequestComponent, NgbNavModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
@@ -24,6 +25,14 @@ export class AppComponent {
   public readArticles: () => Observable<any[]>;
   public readArticle: (article: RequestData) => Observable<any>;
   public deleteArticle: (article: RequestData) => Observable<Object>;
+
+  get activeTab(): number {
+    return Number.parseInt(localStorage.getItem('api_active_tab') ?? '1');
+  }
+
+  set activeTab(value: number) {
+    localStorage.setItem('api_active_tab', value.toString());
+  }
 
   constructor(
     private httpClient: HttpClient,
