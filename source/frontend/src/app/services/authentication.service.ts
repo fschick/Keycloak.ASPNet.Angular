@@ -1,75 +1,65 @@
 import {Injectable} from '@angular/core';
-import {from, Observable, of, switchMap, tap} from 'rxjs';
+import Keycloak, {KeycloakConfig, KeycloakInitOptions} from 'keycloak-js';
+import {from, Observable, of} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
-import {AuthConfig, OAuthService} from "angular-oauth2-oidc";
-
-class UserInfo {
-  preferred_username?: string
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  private userInfo?: UserInfo;
+  private keycloak?: Keycloak;
 
   get isAuthenticated(): boolean {
-    return this.oauthService.hasValidAccessToken();
+    return this.keycloak?.authenticated ?? false;
   }
 
   get username(): string | undefined {
-    return this.userInfo?.preferred_username;
-  }
-
-  constructor(
-    private oauthService: OAuthService,
-  ) {
+    return this.keycloak?.profile?.username;
   }
 
   public init(): Observable<any> {
-    const authConfig: AuthConfig = {
-      scope: 'openid profile email offline_access',
-      responseType: 'code',
-      oidc: true,
+    const authorityUrl = new URL(environment.authority);
+    const keycloakConfig: KeycloakConfig = {
+      url: authorityUrl.origin,
+      realm: authorityUrl.pathname.split('/').filter(segment => segment != '').pop() ?? '',
       clientId: environment.clientId,
-      issuer: environment.authority,
-      redirectUri: location.origin,
-      postLogoutRedirectUri: location.origin,
-      requireHttps: false,
     };
 
-    return this.initAuthService(authConfig)
+    this.keycloak = new Keycloak(keycloakConfig);
+    return this.initKeycloak(this.keycloak)
       .pipe(
-        switchMap(() => this.loadUserProfile(this.isAuthenticated))
+        switchMap(isAuthenticated => this.loadUserProfile(isAuthenticated)
+        )
       );
   }
 
   public getAccessToken(): Observable<string> {
-    if (!this.oauthService.clientId)
-      throw Error('Authentication service not initialized');
+    if (!this.keycloak)
+      throw Error('Keycloak authentication service not initialized');
 
-    return of(this.oauthService.getAccessToken());
+    return from(this.keycloak.updateToken(5))
+      .pipe(map(() => this.keycloak!.token ?? ''));
   }
 
   public login(): void {
-    this.oauthService.initCodeFlow();
+    if (!this.keycloak)
+      throw Error('Keycloak authentication service not initialized');
+    this.keycloak.login();
   }
 
   public logout(): void {
-    this.oauthService.logOut();
+    if (!this.keycloak)
+      throw Error('Keycloak authentication service not initialized');
+    this.keycloak.logout();
   }
 
-  private initAuthService(authConfig: AuthConfig): Observable<any> {
-    this.oauthService.configure(authConfig);
-    this.oauthService.setupAutomaticSilentRefresh();
-    this.oauthService.strictDiscoveryDocumentValidation = false;
-    return from(this.oauthService.loadDiscoveryDocumentAndTryLogin());
+  private initKeycloak(keycloak: Keycloak): Observable<any> {
+    const initOptions: KeycloakInitOptions = {onLoad: 'check-sso', silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'};
+    return from(keycloak.init(initOptions));
   }
 
   private loadUserProfile(isAuthenticated: boolean): Observable<any> {
-    return isAuthenticated
-      ? from(this.oauthService.loadUserProfile()).pipe(tap((userInfo: any) => this.userInfo = userInfo.info))
-      : of(undefined);
+    return isAuthenticated ? from(this.keycloak!.loadUserProfile()) : of(undefined);
   }
 }

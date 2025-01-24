@@ -45,7 +45,7 @@ export class AppComponent {
   ) {
     this.isAuthenticated = this.authenticationService.isAuthenticated;
     this.username = this.authenticationService.username;
-    this.ssoUrl = new URL(environment.authority).origin;
+    this.ssoUrl = `${environment.authority}/admin/master/console/#/${environment.clientId}`;
 
     this.getApplicationName = () => this.httpClient.get(routes.information.getApplicationName, {responseType: 'text'});
     this.getCurrentUser = () => this.httpClient.get(routes.user.getCurrentUser);

@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
 
@@ -33,7 +32,13 @@ internal static class AuthenticationStartup
                 options.Authority = jwtOptions.Authority;
                 options.Audience = jwtOptions.Audience;
                 options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters { ValidateAudience = true, };
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    // https://stackoverflow.com/a/53627747, 
+                    // https://nikiforovall.github.io/aspnetcore/dotnet/2022/08/24/dotnet-keycloak-auth.html
+                    ValidateAudience = false,
+                    NameClaimType = "preferred_username"
+                };
             });
     }
 
@@ -98,19 +103,6 @@ internal static class AuthenticationStartup
         });
 
         options.AddSecurityRequirement();
-    }
-
-    /// <summary>
-    /// Adds authentication to OpenAPI UI.
-    /// </summary>
-    /// <param name="options">The options to act on.</param>
-    /// <param name="configuration">The application configuration.</param>
-    public static void AddAuthentication(this SwaggerUIOptions options, IConfiguration configuration)
-    {
-        var clientId = configuration.GetSection("Swagger").GetValue<string>("ClientId");
-        options.OAuthClientId(clientId);
-        options.OAuthUsePkce();
-        options.EnablePersistAuthorization();
     }
 
     private static void AddSecurityRequirement(this SwaggerGenOptions options)
