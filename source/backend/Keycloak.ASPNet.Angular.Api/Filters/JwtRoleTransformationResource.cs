@@ -1,6 +1,7 @@
 ﻿using Keycloak.ASPNet.Angular.Api.Models;
 using Microsoft.AspNetCore.Authentication;
 using Newtonsoft.Json;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace Keycloak.ASPNet.Angular.Api.Filters;
 /// }
 /// </example>
 /// <seealso cref="IClaimsTransformation" />
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "Instantiated via DI.")]
 public class JwtRoleTransformationResource : IClaimsTransformation
 {
     /// <summary>
