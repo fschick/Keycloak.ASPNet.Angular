@@ -1,7 +1,6 @@
 ﻿using Keycloak.ASPNet.Angular.Api.Models;
 using Microsoft.AspNetCore.Authentication;
 using Newtonsoft.Json;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 namespace Keycloak.ASPNet.Angular.Api.Filters;
 
 /// <summary>
-/// Transforms provider specific roles from tenant to default role claims.
+/// Transforms provider specific roles from resource server to default role claims.
 /// </summary>
 /// <example>
 /// "authorization": {
@@ -22,8 +21,7 @@ namespace Keycloak.ASPNet.Angular.Api.Filters;
 /// }
 /// </example>
 /// <seealso cref="IClaimsTransformation" />
-[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "Instantiated via DI.")]
-public class JwtRoleTransformationTenant : IClaimsTransformation
+public class JwtRoleTransformationResource : IClaimsTransformation
 {
     /// <summary>
     /// Provides a central transformation point to change the specified principal.
