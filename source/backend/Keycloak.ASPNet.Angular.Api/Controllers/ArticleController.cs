@@ -1,4 +1,5 @@
 ﻿using Keycloak.ASPNet.Angular.Api.DTOs;
+using Keycloak.ASPNet.Angular.Api.Models;
 using Keycloak.ASPNet.Angular.Api.Routing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ public class ArticleController : ControllerBase
     /// <param name="article">The article</param>
     /// <param name="cancellationToken">A token that allows processing to be cancelled</param>
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = AuthorizationRoles.Manage)]
     public ActionResult CreateArticle([Required] ArticleDto article, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(article);
@@ -51,7 +52,7 @@ public class ArticleController : ControllerBase
     /// All articles
     /// </returns>
     [HttpGet]
-    [Authorize]
+    [Authorize(Roles = AuthorizationRoles.Read)]
     public ActionResult<ICollection<ArticleDto>> ReadArticles(CancellationToken cancellationToken = default)
         => Ok(_articles.Values);
 
@@ -64,7 +65,7 @@ public class ArticleController : ControllerBase
     /// The requested article
     /// </returns>
     [HttpGet("{id}")]
-    [Authorize]
+    [Authorize(Roles = AuthorizationRoles.Read)]
     public ActionResult<ArticleDto> ReadArticle([Required] string id, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(id);
@@ -83,7 +84,7 @@ public class ArticleController : ControllerBase
     /// <param name="id">The identifier of the article to remove</param>
     /// <param name="cancellationToken">A token that allows processing to be cancelled</param>
     [HttpDelete("{id}")]
-    [Authorize]
+    [Authorize(Roles = AuthorizationRoles.Manage)]
     public ActionResult DeleteArticle([Required] string id, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(id);
