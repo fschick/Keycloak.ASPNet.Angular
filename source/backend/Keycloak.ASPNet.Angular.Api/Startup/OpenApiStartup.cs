@@ -65,7 +65,7 @@ internal static class OpenApiStartup
             config.EnableTryItOutByDefault();
             config.ConfigObject.AdditionalItems.Add("requestSnippetsEnabled", true);
 
-            config.AddAuthorization(configuration);
+            config.AddAuthorization(app, configuration);
         });
     }
 

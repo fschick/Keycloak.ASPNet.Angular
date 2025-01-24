@@ -18,6 +18,12 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Extensions\RptInterceptor.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
     <InheritDocEnabled>true</InheritDocEnabled>
