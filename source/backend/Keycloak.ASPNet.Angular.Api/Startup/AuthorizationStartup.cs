@@ -1,5 +1,4 @@
 ﻿using Keycloak.ASPNet.Angular.Api.Filters;
-using Keycloak.ASPNet.Angular.Api.Models;
 using Keycloak.ASPNet.Angular.Api.Policies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -29,7 +28,6 @@ internal static class AuthorizationStartup
     {
         services.AddHttpClient();
         services.AddAuthorization(options => options.AddPolicy(UmaPolicy.NAME, policy => policy.RequireAuthenticatedUser().Requirements.Add(new UmaPolicy())));
-        services.Configure<KeycloakConfiguration>(configuration.GetSection(KeycloakConfiguration.CONFIGURATION_SECTION));
 
         services.AddSingleton<JwtRoleTransformationTenant, JwtRoleTransformationTenant>();
         services.AddSingleton<JwtRoleTransformationAudience, JwtRoleTransformationAudience>();
