@@ -1,0 +1,76 @@
+<div class="card">
+  <div class="card-header bg-light">
+    {{ title }}
+  </div>
+  <div class="card-body">
+    <div class="row g-2">
+      <div class="title col-4 col-sm-3 col-md-2 col-lg-3">Protection:</div>
+
+      <div class="data col-8 col-sm-9 col-md-10 col-lg-9">
+        @switch (protection) {
+          @case ('anonymous') {
+            <img [ngSrc]="'icons/anonymous.svg'" width="16" height="16">
+            Anonymous
+          }
+          @case ('authenticated') {
+            <img [ngSrc]="'icons/authenticated.svg'" width="16" height="16">
+            Authenticated
+          }
+          @case ('authorized') {
+            <img [ngSrc]="'icons/authorized.svg'" width="16" height="16">
+            Authorized
+          }
+        }
+      </div>
+
+      <div class="title col-4 col-sm-3 col-md-2 col-lg-3 align-self-center">Query:</div>
+      <div class="data  col-8 col-sm-9 col-md-10 col-lg-9">
+        <button type="submit" [attr.form]="id" class="btn btn-secondary btn-sm">Execute</button>
+      </div>
+    </div>
+
+    @if (requestDataForm) {
+      <form [id]="id" [formGroup]="requestDataForm" (ngSubmit)="sendRequest()">
+
+        @for (formControlName of getFormControlNames(); track formControlName) {
+          <div class="row pt-2">
+            <label class="col-form-label col-4 col-sm-3 col-md-2 col-lg-3" [for]="formControlName">{{ formControlName }}: </label>
+            <div class="px-2 col-8 col-sm-9 col-md-10 col-lg-9">
+              <input [id]="formControlName" type="text" class="form-control" [formControlName]="formControlName">
+            </div>
+          </div>
+        }
+      </form>
+    }
+
+    <div class="row pt-2">
+      <div class="title col-4 col-sm-3 col-md-2 col-lg-3">Result:</div>
+      <div class="data  col-8 col-sm-9 col-md-10 col-lg-9">
+        @if (response) {
+          <div class="mb-0">
+            <ul ngbNav #requestResult="ngbNav" class="nav nav-underline" (navChange)="onNavChange($event)">
+              <li ngbNavItem ngbNavItem="parsed" title="View parsed result" class="nav-item">
+                <button ngbNavLink class="pb-0 mb-2">Parsed</button>
+                <ng-template ngbNavContent>
+                  <ngx-json-viewer class="response parsed d-block" [json]="response" [depth]="resultDepth ?? 1"></ngx-json-viewer>
+                </ng-template>
+              </li>
+              <li ngbNavItem ngbNavItem="raw" title="View raw result" class="nav-item">
+                <button ngbNavLink class="pb-0 mb-2">Raw</button>
+                <ng-template ngbNavContent>
+                  <pre class="response mb-0">{{ response | json }}</pre>
+                </ng-template>
+              </li>
+              <li ngbNavItem ngbNavItem="copy" title="Copy result to clipboard" class="nav-item">
+                <a ngbNavLink class="pb-0 mb-2 border-0" ngxClipboard [cbContent]="response | json">
+                  <img [ngSrc]="'icons/clipboard.svg'" width="16" height="16">
+                </a>
+              </li>
+            </ul>
+            <div [ngbNavOutlet]="requestResult"></div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

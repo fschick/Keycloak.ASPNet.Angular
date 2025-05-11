@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Bootstrap adjustments. */
+$card-height: 100%;
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+/* Misc fixs and extension */
+.nav-item {
+  padding-top: 0.1rem;
+}
+
+pre {
+  background-color: $gray-100;
+}
+
+[i-bs] svg {
+  margin-bottom: 0.25rem
+}
+
+.btn {
+  padding-top: 0.4rem;
+}
+
+a {
+  cursor: pointer;
+}

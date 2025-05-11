@@ -1,0 +1,17 @@
+img {
+  margin-top: -0.125rem;
+  margin-right: .25rem;
+}
+
+.response {
+  max-height: 12rem;
+  overflow: auto;
+}
+
+.parsed {
+  margin-left: -14px;
+}
+
+.ng-submitted .ng-invalid {
+  border: 1px solid red !important;
+}
